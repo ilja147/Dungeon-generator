@@ -20,7 +20,7 @@ struct Tile
     friend std::ostream &operator<<(std::ostream &os, const Tile &tile);
 
 };
-std::ostream &operator<<(std::ostream &os, const Tile &tile)
+inline std::ostream &operator<<(std::ostream &os, const Tile &tile)
 {
     switch(tile.type)
     {
