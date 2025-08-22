@@ -2,8 +2,7 @@
 #include <vector>
 #include <string>
 #include "tile.h"
-#include "algorithms.h"
-#include "setting.h"
+struct GenerationSettings;
 class Dungeon
 {
     std::vector<std::vector<Tile>> map;

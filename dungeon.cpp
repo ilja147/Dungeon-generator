@@ -1,4 +1,6 @@
 #include "dungeon.h"
+#include "algorithms.h"
+#include "setting.h"
 #include <iostream>
 void Dungeon::initializeMap()
 {
@@ -15,14 +17,14 @@ void Dungeon::initializeMap()
     }
 }
 Dungeon::Dungeon(int w, int h): width(w), height(h) {}
-void Dungeon::generate(const GenerationSettings& settings);
+void Dungeon::generate(const GenerationSettings &settings)
 {
-    initializeMap(width, height);
-    if(settings.useDtunkardWalk)
+    initializeMap();
+    if(settings.useDrunkardWalk)
     {
         Algorithms::DrunkardWalk(map);
     }
-    if(settings.useCellularAuomata)
+    if(settings.useCellularAutomata)
     {
         Algorithms::CellularAutomata(map);
     }
@@ -30,7 +32,7 @@ void Dungeon::generate(const GenerationSettings& settings);
     {
         Algorithms::RoomCarving(map);
     }
-    estalishNeighbors();
+    //estalishNeighbors();
 }
 void Dungeon::output() const
 {
