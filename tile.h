@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 enum class TileType
 {
     WALL,
@@ -16,4 +17,15 @@ struct Tile
         up(nullptr), down(nullptr), left(nullptr), right(nullptr) {}
     Tile(TileType t, int x, int y) : type(t), x(x), y(y),
         up(nullptr), down(nullptr), left(nullptr), right(nullptr) {}
+    friend std::ostream &operator<<(std::ostream &os, const Tile &tile);
+
 };
+std::ostream &operator<<(std::ostream &os, const Tile &tile)
+{
+    switch(tile.type)
+    {
+    case TileType::WALL: os << '#'; break;
+    case TileType::FLOOR: os << '.'; break;
+    }
+    return os;
+}
