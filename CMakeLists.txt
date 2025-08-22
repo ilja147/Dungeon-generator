@@ -9,7 +9,8 @@ add_executable(Dungeon_generator main.cpp
     dungeon.h dungeon.cpp
     algorithms.h algorithms.cpp
     tile.h tile.cpp
-    input.h input.cpp)
+    input.h input.cpp
+    setting.h setting.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS Dungeon_generator
