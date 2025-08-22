@@ -8,14 +8,15 @@ void Algorithms::DrunkardWalk(std::vector<std::vector<Tile>> &map, int steps)
     static std::mt19937 gen(rd());
     int width = map.size();
     int height = map[0].size();
-    std::uniform_int_distribution <int> distx(1,width - 1);
-    std::uniform_int_distribution <int> disty(1,height - 1);
+    std::uniform_int_distribution <int> distx(1,width - 2);
+    std::uniform_int_distribution <int> disty(1,height - 2);
     std::uniform_int_distribution <int> dir(0,3);
     int ax = distx(gen);
     int ay = disty(gen);
+    map [ax][ay].type = TileType::FLOOR;
     for(int i = 0; i < steps; i++)
     {
-        map[ax][ay].type = TileType::FLOOR;
+
         int d = dir(gen);
         switch(d)
         {
@@ -36,6 +37,7 @@ void Algorithms::DrunkardWalk(std::vector<std::vector<Tile>> &map, int steps)
                 ax++;
             break;
         }
+        map[ax][ay].type = TileType::FLOOR;
     }
 }
 void Algorithms::CellularAutomata(std::vector<std::vector<Tile>> &map)
@@ -64,14 +66,14 @@ void Algorithms::CellularAutomata(std::vector<std::vector<Tile>> &map)
             }
             if(map2[i][j].type == TileType::WALL)
             {
-                if(liveNeighbors >= 4)
+                if(liveNeighbors >= 5)
                     map2[i][j].type = TileType::WALL;
                 else
                     map2[i][j].type = TileType::FLOOR;
             }
             else
             {
-                if(liveNeighbors >= 5)
+                if(liveNeighbors >= 6)
                     map2[i][j].type = TileType::WALL;
                 else
                     map2[i][j].type = TileType::FLOOR;

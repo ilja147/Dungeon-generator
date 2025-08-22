@@ -1,5 +1,3 @@
-#include <cstdlib>
-
 #include "input.h"
 #include "dungeon.h"
 int main()
