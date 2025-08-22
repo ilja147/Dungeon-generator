@@ -1,8 +1,8 @@
 #include "dungeon.h"
-
-void Dungeon::initializeMap(int width, int height)
+#include <iostream>
+void Dungeon::initializeMap()
 {
-    map.resize(width, height);
+    map.resize(width, std::vector<Tile>(height));
     for(int x = 0; x < width; x++)
     {
         for(int y = 0; y < height; y++)
@@ -32,12 +32,16 @@ void Dungeon::generate(const GenerationSettings& settings);
     }
     estalishNeighbors();
 }
-void output() const
+void Dungeon::output() const
 {
-    for(int i = 0; i < )
+    for(int x = 0; x < width; x++)
+    {
+        for(int y; y < height; y++)
+        {
+            std::cout << map[x][y];
+        }
+        std::cout << "\n";
+    }
 }
-void save(const std::string &filename) const;
-static Dungeon load(const std::string &filename);
-const std::vector<std::vector<Tile>> &getMap() const{return map;}
-int getWidth() const {return width;}
-int getHeight() const {return height;}
+//void save(const std::string &filename) const;
+//static Dungeon load(const std::string &filename);

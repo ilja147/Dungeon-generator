@@ -1,13 +1,15 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "tile.h"
+#include "algorithms.h"
 class Dungeon
 {
     std::vector<std::vector<Tile>> map;
     int width, height;
 public:
     Dungeon(int w, int h);
-    void initializeMap(int width,int height);
+    void initializeMap();
     void generate(const GenerationSettings& settings);
     void output() const;
     void save(const std::string &filename) const;

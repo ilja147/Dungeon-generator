@@ -6,7 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(Dungeon_generator main.cpp
-    dungeon.h dungeon.cpp)
+    dungeon.h dungeon.cpp
+    algorithms.h algorithms.cpp
+    tile.h tile.cpp
+    input.h input.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS Dungeon_generator
