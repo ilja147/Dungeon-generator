@@ -9,10 +9,10 @@ GenerationSettings getUserSettings()
     std::cout << "\nHeight: ";
     std::cin >> settings.height;
     std::cout << "\nUse Drinkardwalk?(1 for yes, 0 for no): ";
-    std::cin >> settings.DrunkardWalk;
+    std::cin >> settings.useDrunkardWalk;
     std::cout << "\nUse CellularAutomata? (1 for yes, 0 for no): ";
-    std::cin >> settings.CellularAutomata;
+    std::cin >> settings.useCellularAutomata;
     std::cout << "\nUse RoomCarving? (1 for yes, 0 for no): ";
-    std::cin >> settings.RoomCarving;
+    std::cin >> settings.useRoomCarving;
     return settings;
 }
