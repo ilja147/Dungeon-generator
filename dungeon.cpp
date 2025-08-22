@@ -22,7 +22,7 @@ void Dungeon::generate(const GenerationSettings &settings)
     initializeMap();
     if(settings.useDrunkardWalk)
     {
-        Algorithms::DrunkardWalk(map);
+        Algorithms::DrunkardWalk(map,settings.DrunkardWalkSteps);
     }
     if(settings.useCellularAutomata)
     {
