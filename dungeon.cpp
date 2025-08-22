@@ -4,14 +4,14 @@
 #include <iostream>
 void Dungeon::initializeMap()
 {
-    map.resize(width, std::vector<Tile>(height));
-    for(int x = 0; x < width; x++)
+    map.resize(height, std::vector<Tile>(width));
+    for(int y = 0; y < height; y++)
     {
-        for(int y = 0; y < height; y++)
+        for(int x = 0; x < width; x++)
         {
-            map[x][y].type = TileType::WALL;
-            map[x][y].x = x;
-            map[x][y].y = y;
+            map[y][x].type = TileType::WALL;
+            map[y][x].x = x;
+            map[y][x].y = y;
         }
 
     }
@@ -36,11 +36,11 @@ void Dungeon::generate(const GenerationSettings &settings)
 }
 void Dungeon::output() const
 {
-    for(int x = 0; x < width; x++)
+    for(int y = 0; y < height; y++)
     {
-        for(int y = 0; y < height; y++)
+        for(int x = 0; x < width; x++)
         {
-            std::cout << map[x][y];
+            std::cout << map[y][x];
         }
         std::cout << "\n";
     }
