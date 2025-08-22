@@ -7,6 +7,7 @@ class Dungeon
     int width, height;
 public:
     Dungeon(int w, int h);
+    void initializeMap(int width,int height);
     void generate(const GenerationSettings& settings);
     void output() const;
     void save(const std::string &filename) const;
