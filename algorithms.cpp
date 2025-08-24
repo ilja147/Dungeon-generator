@@ -7,30 +7,26 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
 {
     int direction = -1;
     bool can = 0;
-        if(map[tile.x][tile.y-1].type == TileType::WALL && tile.y > 1)
+        if(map[tile.y-1][tile.x].type == TileType::WALL && tile.y > 1)
         {
             direction = 0;
         }
-        if(map[tile.x][tile.y+1].type == TileType::WALL && tile.y <= map[0].size()-1)
+        else if(map[tile.y+1][tile.x].type == TileType::WALL && tile.y <= map.size()-1)
         {
             direction = 1;
         }
-        if(map[tile.x-1][tile.y].type == TileType::WALL && tile.x > 1)
+        else if(map[tile.y][tile.x-1].type == TileType::WALL && tile.x > 1)
         {
             direction = 2;
         }
-        if(map[tile.x+1][tile.y].type == TileType::WALL && tile.x <= map.size()-1)
+        else if(map[tile.y][tile.x+1].type == TileType::WALL && tile.x <= map[0].size()-1)
         {
             direction = 3;
         }
         else
         {
-            direction = -1;
+            return {0,0,0};
         }
-    if(direction == -1)
-    {
-        return {0,0,0};
-    }
     if(tile.y + roomHeigh > map.size() || tile.x + roomWidth > map[0].size())
     {
         return {0,0,0};
@@ -42,10 +38,18 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     if(direction == 0)
     {
         int x = rotationx(gen);
+        if(tile.y - roomHeigh < 0 || tile.x + roomWidth - x > map[0].size())
+        {
+            return {0,0,0};
+        }
         for(int dy = tile.y-1; dy > tile.y-roomHeigh; dy--)
         {
             for(int dx = tile.x; dx < tile.x + roomWidth-x; dx++)
             {
+                if(dy < 0 || dy >=map.size() || dx < 0 || dx > map[0].size())
+                {
+                    return{0,0,0};
+                }
                 if(!(map[dy][dx].type == TileType::WALL))
                 {
                     return {0,0,0};
@@ -57,10 +61,18 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     else if(direction == 1)
     {
         int x = rotationx(gen);
+        if(tile.y + roomHeigh > map.size() || tile.x + roomWidth - x > map[0].size())
+        {
+            return {0,0,0};
+        }
         for(int dy = tile.y+1; dy < tile.y+roomHeigh; dy++)
         {
             for(int dx = tile.x; dx < tile.x + roomWidth-x; dx++)
             {
+                if(dy < 0 || dy >=map.size() || dx < 0 || dx > map[0].size())
+                {
+                    return{0,0,0};
+                }
                 if(!(map[dy][dx].type == TileType::WALL))
                 {
                     return {0,0,0};
@@ -72,10 +84,18 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     else if(direction == 2)
     {
         int y = rotationy(gen);
+        if(tile.x-roomWidth < 0||tile.y - roomHeigh + y < 0)
+        {
+            return {0,0,0};
+        }
         for(int dy = tile.y; dy > tile.y+roomHeigh-y;dy--)
         {
             for(int dx = tile.x; dx > tile.x-roomWidth; dx--)
             {
+                if(dy < 0 || dy > map.size() || dx < 0 || dx > map[0].size())
+                {
+                    return {0,0,0};
+                }
                 if(!(map[dy][dx].type == TileType::WALL))
                 {
                     return {0,0,0};
@@ -88,10 +108,18 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     {
         {
             int y = rotationy(gen);
+            if(tile.x+roomWidth > map[0].size() || tile.y + roomHeigh > map.size())
+            {
+                return {0,0,0};
+            }
             for(int dy = tile.y; dy < tile.y-roomHeigh+y;dy++)
             {
                 for(int dx = tile.x; dx > tile.x+roomWidth; dx++)
                 {
+                    if(dy < 0 || dy > map.size() || dx < 0 || dx > map[0].size())
+                    {
+                        return {0,0,0};
+                    }
                     if(!(map[dy][dx].type == TileType::WALL))
                     {
                         return {0,0,0};
@@ -202,41 +230,42 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int sizex, int
                         if(nx >= 0 && nx < map[0].size() && ny > 0 && ny < map.size())
                         {
                             if (map[ny][nx].type == TileType::WALL)
-                        hasWallNeighbor = true;
+                                hasWallNeighbor = true;
                         }
                     }
                 }
                 if(hasWallNeighbor)
                 {
-
                     vec.push_back(&map[j][i]);
                 }
             }
         }
     }
+    if(vec.empty()) return;
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0,vec.size()-1);
-
     std::uniform_int_distribution<int> randx(2,sizex);
     std::uniform_int_distribution<int> randy(2,sizey);
-    int width = randx(gen);
-    int height = randy(gen);
     int count = 0;
     while(count <= RoomCount)
     {
+        int width = randx(gen);
+        int height = randy(gen);
         int random_index = dis(gen);
         auto i = canPlaceRoom(map, *vec[random_index],width, height);
         if(std::get<0>(i)== 1)
         {
-
             if(std::get<1>(i)==0)
             {
                 for(int dy = vec[random_index]->y-1; dy > vec[random_index]->y-height;dy--)
                 {
                     for(int dx = vec[random_index]->x; dx < vec[random_index]->x+width-std::get<2>(i); dx++)
                     {
-                        map[dy][dx].type = TileType::FLOOR;
+                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        {
+                            map[dy][dx].type = TileType::FLOOR;
+                        }
                     }
                 }
             }
@@ -246,29 +275,39 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int sizex, int
                 {
                     for(int dx = vec[random_index]->x; dx < vec[random_index]->x+width-std::get<2>(i); dx++)
                     {
-                        map[dy][dx].type = TileType::FLOOR;
+                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        {
+                            map[dy][dx].type = TileType::FLOOR;
+                        }
                     }
                 }
             }
             else if(std::get<1>(i)==2)
             {
-                for(int dy = vec[random_index]->y; dy > vec[random_index]->y+height-std::get<2>(i);dy--)
+                for(int dx = vec[random_index]->x - 1; dx >= vec[random_index]->x-width; dx--)
                 {
-                    for(int dx = vec[random_index]->x; dx > vec[random_index]->x-width;dx--)
+                    for(int dy = vec[random_index]->y; dy > vec[random_index]->y - height + std::get<2>(i);dy--)
                     {
-                        map[dy][dx].type = TileType::FLOOR;
+                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        {
+                            map[dy][dx].type = TileType::FLOOR;
+                        }
                     }
                 }
             }
             else if(std::get<1>(i)==3)
             {
-                for(int dy = vec[random_index]->y; dy > vec[random_index]->y-height+std::get<2>(i);dy--)
+                for(int dx = vec[random_index]->x+1; dx <= vec[random_index]->x + width; dx++)
                 {
-                    for(int dx = vec[random_index]->x; dx > vec[random_index]->x+width;dx++)
+                    for(int dy = vec[random_index]->y; dy < vec[random_index]->y + height - std::get<2>(i); dy++)
                     {
-                        map[dy][dx].type = TileType::FLOOR;
+                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        {
+                            map[dy][dx].type = TileType::FLOOR;
+                        }
                     }
                 }
+
             }
             count++;
         }
