@@ -211,7 +211,7 @@ void Algorithms::CellularAutomata(std::vector<std::vector<Tile>> &map)
     }
     map = map2;
 }
-void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int sizex, int sizey, int RoomCount)
+void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, int minsizey,int maxsizex, int maxsizey, int RoomCount)
 {
     std::vector<Tile*> vec;
     for(int j = 0; j < map.size(); j++)
@@ -245,8 +245,8 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int sizex, int
     static std::random_device rd;
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0,vec.size()-1);
-    std::uniform_int_distribution<int> randx(2,sizex);
-    std::uniform_int_distribution<int> randy(2,sizey);
+    std::uniform_int_distribution<int> randx(minsizex,maxsizex);
+    std::uniform_int_distribution<int> randy(minsizey,maxsizey);
     int count = 0;
     while(count <= RoomCount)
     {

@@ -30,10 +30,16 @@ GenerationSettings getUserSettings()
     if(settings.useRoomCarving)
     {
         std::cout << "\nChoose rooms minimal size: \nX: ";
-        std::cin >> settings.RoomSizex;
+        std::cin >> settings.RoomMinSizex;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "\nY:";
-        std::cin >> settings.RoomSizey;
+        std::cout << "\nY: ";
+        std::cin >> settings.RoomMinSizey;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nChoose rooms maximal size: \nX: ";
+        std::cin >> settings.RoomMaxSizex;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nY: ";
+        std::cin >> settings.RoomMaxSizey;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "\nMinimal number of rooms";
         std::cin >> settings.RoomCount;

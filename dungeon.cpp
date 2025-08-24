@@ -30,7 +30,7 @@ void Dungeon::generate(const GenerationSettings &settings)
     }
     if(settings.useRoomCarving)
     {
-        Algorithms::RoomCarving(map,settings.RoomSizex,settings.RoomSizey,settings.RoomCount);
+        Algorithms::RoomCarving(map,settings.RoomMinSizex,settings.RoomMinSizey,settings.RoomMaxSizex,settings.RoomMaxSizey,settings.RoomCount);
     }
     //estalishNeighbors();
 }
