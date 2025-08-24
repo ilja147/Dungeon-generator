@@ -1,23 +1,43 @@
 #include "input.h"
 #include <iostream>
+#include <limits>
 
 GenerationSettings getUserSettings()
 {
     GenerationSettings settings;
     std::cout << "Width: ";
     std::cin >> settings.width;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "\nHeight: ";
     std::cin >> settings.height;
-    std::cout << "\nUse Drinkardwalk?(1 for yes, 0 for no)(its main algorythm): ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout << "\nUse Drunkardwalk?(1 for yes, 0 for no)(its main algorythm): ";
     std::cin >> settings.useDrunkardWalk;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     if(settings.useDrunkardWalk)
     {
         std::cout << "\nHow many passes to use? ";
         std::cin >> settings.DrunkardWalkSteps;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
     std::cout << "\nUse CellularAutomata? (1 for yes, 0 for no): ";
     std::cin >> settings.useCellularAutomata;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "\nUse RoomCarving? (1 for yes, 0 for no): ";
     std::cin >> settings.useRoomCarving;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout << "debug";
+    if(settings.useRoomCarving)
+    {
+        std::cout << "\nChoose rooms minimal size: \nX: ";
+        std::cin >> settings.RoomSizex;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nY:";
+        std::cin >> settings.RoomSizey;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nMinimal number of rooms";
+        std::cin >> settings.RoomCount;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
     return settings;
 }

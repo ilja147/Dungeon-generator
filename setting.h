@@ -7,4 +7,7 @@ struct GenerationSettings
     int DrunkardWalkSteps;
     bool useCellularAutomata;
     bool useRoomCarving;
+    int RoomSizex;
+    int RoomSizey;
+    int RoomCount;
 };
