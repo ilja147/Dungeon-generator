@@ -254,12 +254,8 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
         int height = randy(gen);
         int random_index = dis(gen);
         auto i = canPlaceRoom(map, *vec[random_index],width, height);
-        std::cout << "\n"<<std::get<0>(i) <<"\t" <<std::get<1>(i) << "\t" << std::get<2>(i) << "\n";
-
         if(std::get<0>(i)== 1)
         {
-            std::cout << "\n"<<std::get<0>(i) <<"\t" <<std::get<1>(i) << "\t" << std::get<2>(i) << "\n";
-
             if(std::get<1>(i)==0)
             {
                 for(int dy = vec[random_index]->y-1; dy > vec[random_index]->y-height;dy--)
