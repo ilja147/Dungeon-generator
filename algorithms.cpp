@@ -38,7 +38,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     if(direction == 0)
     {
         int x = rotationx(gen);
-        if(tile.y - roomHeigh < 0 || tile.x + roomWidth - x > map[0].size()-1)
+        if(tile.y - roomHeigh < 0 || tile.x + roomWidth - x > map[0].size()-1 || tile.x-roomWidth+x < 0)
         {
             return {0,0,0};
         }
@@ -61,7 +61,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     else if(direction == 1)
     {
         int x = rotationx(gen);
-        if(tile.y + roomHeigh > map.size()-1 || tile.x + roomWidth - x > map[0].size()-1)
+        if(tile.y + roomHeigh > map.size()-1 || tile.x + roomWidth - x > map[0].size()-1 || tile.x-roomWidth+x < 0)
         {
             return {0,0,0};
         }
@@ -84,7 +84,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     else if(direction == 2)
     {
         int y = rotationy(gen);
-        if(tile.x-roomWidth < 0||tile.y - roomHeigh + y < 0)
+        if(tile.x-roomWidth < 0||tile.y - roomHeigh + y < 0 || tile.y + roomHeigh - y > map.size() - 1)
         {
             return {0,0,0};
         }
@@ -108,7 +108,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     {
         {
             int y = rotationy(gen);
-            if(tile.x+roomWidth > map[0].size()-1 || tile.y + roomHeigh > map.size()-1)
+            if(tile.x+roomWidth > map[0].size()-1 || tile.y - roomHeigh  + y > map.size()-1 || tile.y + roomHeigh - y > map.size()-1 )
             {
                 return {0,0,0};
             }
@@ -256,11 +256,13 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
         auto i = canPlaceRoom(map, *vec[random_index],width, height);
         if(std::get<0>(i)== 1)
         {
+            std::cout << "\n"<<std::get<0>(i) <<"\t" <<std::get<1>(i) << "\t" << std::get<2>(i) << "\n";
+
             if(std::get<1>(i)==0)
             {
                 for(int dy = vec[random_index]->y-1; dy > vec[random_index]->y-height;dy--)
                 {
-                    for(int dx = vec[random_index]->x; dx < vec[random_index]->x+width-std::get<2>(i); dx++)
+                    for(int dx = vec[random_index]->x-std::get<2>(i); dx < vec[random_index]->x+width; dx++)
                     {
                         if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
                         {
@@ -273,7 +275,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
             {
                 for(int dy = vec[random_index]->y+1; dy < vec[random_index]->y+height;dy++)
                 {
-                    for(int dx = vec[random_index]->x; dx < vec[random_index]->x+width-std::get<2>(i); dx++)
+                    for(int dx = vec[random_index]->x-std::get<2>(i); dx < vec[random_index]->x+width; dx++)
                     {
                         if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
                         {
@@ -286,7 +288,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
             {
                 for(int dx = vec[random_index]->x - 1; dx >= vec[random_index]->x-width; dx--)
                 {
-                    for(int dy = vec[random_index]->y; dy > vec[random_index]->y - height + std::get<2>(i);dy--)
+                    for(int dy = vec[random_index]->y+std::get<2>(i); dy > vec[random_index]->y - height + std::get<2>(i);dy--)
                     {
                         if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
                         {
@@ -299,7 +301,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
             {
                 for(int dx = vec[random_index]->x+1; dx <= vec[random_index]->x + width; dx++)
                 {
-                    for(int dy = vec[random_index]->y; dy < vec[random_index]->y + height - std::get<2>(i); dy++)
+                    for(int dy = vec[random_index]->y-std::get<2>(i); dy < vec[random_index]->y + height - std::get<2>(i); dy++)
                     {
                         if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
                         {
