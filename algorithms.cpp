@@ -264,7 +264,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
                 {
                     for(int dx = vec[random_index]->x-std::get<2>(i); dx < vec[random_index]->x+width; dx++)
                     {
-                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        if(dy>=0 && dy < map.size()-1 && dx >=0 && dx < map[0].size()-1)
                         {
                             map[dy][dx].type = TileType::FLOOR;
                         }
@@ -277,7 +277,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
                 {
                     for(int dx = vec[random_index]->x-std::get<2>(i); dx < vec[random_index]->x+width; dx++)
                     {
-                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        if(dy>=0 && dy < map.size()-1 && dx >=0 && dx < map[0].size()-1)
                         {
                             map[dy][dx].type = TileType::FLOOR;
                         }
@@ -290,7 +290,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
                 {
                     for(int dy = vec[random_index]->y+std::get<2>(i); dy > vec[random_index]->y - height + std::get<2>(i);dy--)
                     {
-                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        if(dy>=0 && dy < map.size()-1 && dx >=0 && dx < map[0].size()-1)
                         {
                             map[dy][dx].type = TileType::FLOOR;
                         }
@@ -303,7 +303,7 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
                 {
                     for(int dy = vec[random_index]->y-std::get<2>(i); dy < vec[random_index]->y + height - std::get<2>(i); dy++)
                     {
-                        if(dy>=0 && dy < map.size() && dx >=0 && dx < map[0].size())
+                        if(dy>=0 && dy < map.size()-1 && dx >=0 && dx < map[0].size()-1)
                         {
                             map[dy][dx].type = TileType::FLOOR;
                         }
