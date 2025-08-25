@@ -27,7 +27,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
         {
             return {0,0,0};
         }
-    if(tile.y + roomHeigh > map.size() || tile.x + roomWidth > map[0].size())
+    if(tile.y + roomHeigh > map.size()-1 || tile.x + roomWidth > map[0].size()-1)
     {
         return {0,0,0};
     }
@@ -38,7 +38,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     if(direction == 0)
     {
         int x = rotationx(gen);
-        if(tile.y - roomHeigh < 0 || tile.x + roomWidth - x > map[0].size())
+        if(tile.y - roomHeigh < 0 || tile.x + roomWidth - x > map[0].size()-1)
         {
             return {0,0,0};
         }
@@ -46,7 +46,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
         {
             for(int dx = tile.x; dx < tile.x + roomWidth-x; dx++)
             {
-                if(dy < 0 || dy >=map.size() || dx < 0 || dx > map[0].size())
+                if(dy < 0 || dy >=map.size()-1 || dx < 0 || dx >= map[0].size()-1)
                 {
                     return{0,0,0};
                 }
@@ -61,7 +61,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     else if(direction == 1)
     {
         int x = rotationx(gen);
-        if(tile.y + roomHeigh > map.size() || tile.x + roomWidth - x > map[0].size())
+        if(tile.y + roomHeigh > map.size()-1 || tile.x + roomWidth - x > map[0].size()-1)
         {
             return {0,0,0};
         }
@@ -69,7 +69,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
         {
             for(int dx = tile.x; dx < tile.x + roomWidth-x; dx++)
             {
-                if(dy < 0 || dy >=map.size() || dx < 0 || dx > map[0].size())
+                if(dy < 0 || dy >=map.size()-1 || dx < 0 || dx >= map[0].size()-1)
                 {
                     return{0,0,0};
                 }
@@ -92,7 +92,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
         {
             for(int dx = tile.x; dx > tile.x-roomWidth; dx--)
             {
-                if(dy < 0 || dy > map.size() || dx < 0 || dx > map[0].size())
+                if(dy < 0 || dy > map.size()-1 || dx < 0 || dx >= map[0].size()-1)
                 {
                     return {0,0,0};
                 }
@@ -108,7 +108,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     {
         {
             int y = rotationy(gen);
-            if(tile.x+roomWidth > map[0].size() || tile.y + roomHeigh > map.size())
+            if(tile.x+roomWidth > map[0].size()-1 || tile.y + roomHeigh > map.size()-1)
             {
                 return {0,0,0};
             }
@@ -116,7 +116,7 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
             {
                 for(int dx = tile.x; dx > tile.x+roomWidth; dx++)
                 {
-                    if(dy < 0 || dy > map.size() || dx < 0 || dx > map[0].size())
+                    if(dy < 0 || dy > map.size()-1 || dx < 0 || dx >= map[0].size()-1)
                     {
                         return {0,0,0};
                     }
@@ -172,9 +172,9 @@ void Algorithms::DrunkardWalk(std::vector<std::vector<Tile>> &map, int steps)
 void Algorithms::CellularAutomata(std::vector<std::vector<Tile>> &map)
 {
     std::vector<std::vector<Tile>> map2 = map;
-    for(int j = 0; j < map2.size(); j++)
+    for(int j = 0; j < map2.size()-1; j++)
     {
-        for(int i = 0; i < map2[0].size(); i++)
+        for(int i = 0; i < map2[0].size()-1; i++)
         {
             int liveNeighbors = 0;
             for(int dy = -1; dy <= 1; dy++)
@@ -187,7 +187,7 @@ void Algorithms::CellularAutomata(std::vector<std::vector<Tile>> &map)
                     }
                     int nx = i + dx;
                     int ny = j + dy;
-                    if(nx < 0 || nx >= map2.size() || ny < 0 || ny >= map2[0].size())
+                    if(nx < 0 || nx >= map2[0].size()-1 || ny < 0 || ny >= map2.size()-1)
                         liveNeighbors++;
                     else if(map2[ny][nx].type == TileType::WALL)
                         liveNeighbors++;
