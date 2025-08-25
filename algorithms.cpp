@@ -33,8 +33,8 @@ std::tuple<bool,int,int> canPlaceRoom(const std::vector<std::vector<Tile>> &map,
     }
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution <int> rotationx(0,roomWidth-1);
-    std::uniform_int_distribution <int> rotationy(0,roomHeigh-1);
+    std::uniform_int_distribution <int> rotationx(0,roomWidth);
+    std::uniform_int_distribution <int> rotationy(0,roomHeigh);
     if(direction == 0)
     {
         int x = rotationx(gen);
@@ -254,6 +254,8 @@ void Algorithms::RoomCarving(std::vector<std::vector<Tile>> &map, int minsizex, 
         int height = randy(gen);
         int random_index = dis(gen);
         auto i = canPlaceRoom(map, *vec[random_index],width, height);
+        std::cout << "\n"<<std::get<0>(i) <<"\t" <<std::get<1>(i) << "\t" << std::get<2>(i) << "\n";
+
         if(std::get<0>(i)== 1)
         {
             std::cout << "\n"<<std::get<0>(i) <<"\t" <<std::get<1>(i) << "\t" << std::get<2>(i) << "\n";
